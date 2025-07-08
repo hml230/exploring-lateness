@@ -1,0 +1,24 @@
+=== DATASET SUMMARY ===
+Total records: 20,986,830
+
+Lateness distribution:
++---------------+-------+
+|lateness_bucket|  count|
++---------------+-------+
+|        On Time|6420300|
+|          Early|6033889|
+|   1–5 min Late|5903972|
+|  5–15 min Late|2215828|
+| 15–30 min Late| 336039|
+|   30+ min Late|  76802|
++---------------+-------+
+
+
+Dataset distribution:
++--------+-------+
+| dataset|  count|
++--------+-------+
+|  august|8264116|
+|november|7938064|
+|     eoy|4784650|
++--------+-------+
