@@ -13,7 +13,7 @@
   <a href="#mine"> Data Mining </a> •
   <a href="#models"> Modelling </a> •
   <a href="#plots"> Plotting results </a> •
-  <a href="#conc"> Conclusions and recommendations</a>
+  <a href="#conc"> Conclusions</a>
 </p>
 
 <a id = 'summary'></a>
