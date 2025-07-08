@@ -56,7 +56,6 @@ config_local.*
 build/
 develop-eggs/
 dist/
-images/
 downloads/
 eggs/
 .eggs/
