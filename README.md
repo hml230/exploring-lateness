@@ -115,6 +115,12 @@ The usual diagnostic plots were then created after the fit:
    <img src="images/lr_results.png" alt="Diagnostics Plots of Linear Model"  width="500">
 <p/>
 
+ChronosT5's predictions are plotted beloe
+
+<p align="center">
+   <img src="src/chronos_t5/results" alt="ChronosT5-Tiny predictions"  width="500">
+<p/>
+
 <a id = 'conc'></a>
 
 Both models generated negative $R^2$ scores, indicating these regression models are not be sufficient models in capturing the variation of lateness within these datasets. The linear model illustrates an interesting behaviour of the residuals, where residuals follow a negative linear trend while the Gaussian GLM shows resdiuals tend to cluster. Error metrics are quite high, suggesting the results these models generate are not precise enough to be useful.
