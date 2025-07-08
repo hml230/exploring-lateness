@@ -118,7 +118,7 @@ The usual diagnostic plots were then created after the fit:
 ChronosT5's predictions are plotted beloe
 
 <p align="center">
-   <img src="src/chronos_t5/results" alt="ChronosT5-Tiny predictions"  width="500">
+   <img src="src/chronos_t5/results/chronos_output.png" alt="ChronosT5-Tiny predictions"  width="500">
 <p/>
 
 <a id = 'conc'></a>
