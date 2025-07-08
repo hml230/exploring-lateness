@@ -2,7 +2,7 @@
 
 <br>
 <p align="center">
-  <img src="images/bus_transport.jpeg">
+  <img src="images/bus_transport.jpeg" alt="Title Image">
 </p>
 <br>
 
@@ -79,11 +79,7 @@ I then looked for any statistical relationships, correlations, or other relevant
 A heatmap of correlations using `Seaborn` follows:
 
 <p align="center">
-   <img src="images/correlation_heatmap.png" width="400">
-<p/>
-
-<p align="center">
-   <img src="images/pairplot_analysis.png" width="700">
+   <img src="images/heatmap.png" alt="Correlation Heatmap" width="400">
 <p/>
 
 <a id = 'models'></a>
@@ -114,13 +110,7 @@ model = ridge.fit(X, y)
 I then plotted the predictions versus the true lateness values:
 
 <p align="center">
-   <img src="images/predictions_vs_actual.png" width="500">
-<p/>
-
-Feature importance visualization:
-
-<p align="center">
-   <img src="images/feature_importance.png" width="500">
+   <img src="images/glm_results.png" alt="Diagnostics Plots of Gaussian GLM"  width="500">
 <p/>
 
 <a id = 'conc'></a>
