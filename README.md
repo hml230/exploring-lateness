@@ -1,5 +1,5 @@
 # Bus Lateness Prediction Analysis
-
+![Image title](https://img.shields.io/badge/python-3.10.0-orange.svg) ![Image title](https://img.shields.io/badge/PySpark-3.4.0-orange.svg) ![Image title](https://img.shields.io/badge/sklearn-1.7.0-yellow.svg) ![Image title](https://img.shields.io/badge/pandas-2.3.0-yellow.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 <br>
 <p align="center">
   <img src="images/bus.jpg" alt="Title Image">
@@ -9,18 +9,20 @@
 <p align="center">
   <a href="#summary"> Executive summary </a> •
   <a href="#data"> Sourcing data </a> •
-  <a href="#munge_eda"> Data Transformation and EDA </a> •
-  <a href="#mine"> Data Mining </a> •
+  <a href="#munge_eda"> Data Transformation </a> •
+  <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Modelling </a> •
   <a href="#plots"> Plotting results </a> •
-  <a href="#conc"> Conclusions and recommendations</a>
+  <a href="#conc"> Conclusions</a>
 </p>
 
 <a id = 'summary'></a>
 
 ## Executive Summary
 
-From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness, both consistently suggested spatial features, like `route_variant`, provide strong predictive insights into lateness. ChronosT5 was fine-tuned as forecasted lateness to be around 0.1-1.1 minute. Chronos's performance deteriorate for datasets with >100k observations, potentially due to model size, which limits the ability to extrapolate on the full dataset.  
+From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness. 
+
+ChronosT5 was fine-tuned as forecasted lateness to be around 0.1-0.9 minute. The model's performance deteriorate for datasets with >100k observations, potentially due to model size, which limits the ability to extrapolate on the full dataset.  
 
 Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5.
 
@@ -109,6 +111,12 @@ The usual diagnostic plots were then created after the fit:
 
 <p align="center">
    <img src="images/lr_results.png" alt="Diagnostics Plots of Linear Model"  width="500">
+<p/>
+
+ChronosT5's predictions are plotted below:
+
+<p align="center">
+   <img src="src/chronos_t5/results/chronos_output.png" alt="ChronosT5-Tiny predictions"  width="500">
 <p/>
 
 <a id = 'conc'></a>
