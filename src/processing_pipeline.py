@@ -107,6 +107,14 @@ def process_single_dataset(file_name, dataset_label):
         "lateness_minutes",
         ((F.unix_timestamp("actual_time") - F.unix_timestamp("timetable_time")) / 60).cast("double")
     )
+
+    # Cap outlier values, lateness > 60 minutes suggests issues that are not inherent in buses
+    df = df.withColumn(
+    "lateness_minutes",
+    F.when(F.col("lateness_minutes") < -60, -60)
+     .when(F.col("lateness_minutes") > 60, 60)
+     .otherwise(F.col("lateness_minutes"))
+    )
     
     # Create lateness buckets
     df = df.withColumn(

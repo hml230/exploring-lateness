@@ -20,9 +20,9 @@
 
 ## Executive Summary
 
-From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness, both consistently suggested spatial features, like `route` and `transit_stop_sequence`, provide strong predictive insights into lateness. ChronosT5 was fine-tuned as forecasted lateness to be around 0.1-0.9 minute. The model's performance deteriorate for datasets with >100k observations, potentially due to model size, which limits the ability to extrapolate on the full dataset.  
+From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness, both consistently suggested spatial features, like `route_variant`, provide strong predictive insights into lateness. ChronosT5 was fine-tuned as forecasted lateness to be around 0.1-1.1 minute. Chronos's performance deteriorate for datasets with >100k observations, potentially due to model size, which limits the ability to extrapolate on the full dataset.  
 
-Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a time series may not be sufficient for ChronosT5
+Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5.
 
 <a id = 'data'></a>
 
@@ -48,6 +48,8 @@ Data transformation procedures performed:
 
 - Casting the temporal features, `calendar_date`, `timetable_time` and `actual_time` to DateType and Timestamp data types respectively
 
+- Examining the data we find that the maximum lateness values were many standard deviations larger than the mean (~1400 minutes). These values are not informative to lateness, and keeping extreme outliers in the analysis would skew the predicted lateness patterns. Therefore capping was performed to limit outlier values to the range $[-60, 60]$ minutes
+
 - Calculating lateness as the difference between actual and scheduled departure times
 
 - Eliminating whitespaces and standardising all string-value variables to lowercase
@@ -55,8 +57,6 @@ Data transformation procedures performed:
 - Dropping `null` values in the `actual_time` column, since the absence of these values are random
 
 - Creating time-based features such as hour of day, day of week, and peak/off-peak indicators
-
-- Examining the data we find that the maximum lateness values were many standard deviations larger than the mean, indicating the presence of outliers. Keeping extreme outliers in the analysis would skew the predicted lateness patterns.
 
 - Create stratified samples of sizes 10K to 100K of the full dataset, since there are >20M trips made in total
 
@@ -66,7 +66,7 @@ Data transformation procedures performed:
 
 Some of the steps for mining the data included: computing average lateness per route and computing both passenger load factors and frequency-based metrics.
 
-Outliers are diverse within the datasets acquired, however, as I was not able to verify whether each outlier occured at random (outages, traffic incident, etc.), I was not able to justify removing these data points. They are standardised in the model preprocessing step.
+Outliers are diverse within the datasets acquired, the values range from $-1400$ minutes to $1500$ minutes. From the problem definition, these values suggest issues related to the shceduling system, or other external factors that are not studied in this project. Hence, I capped these `lateness_minutes` values to $\pm 60$ minutes to ensure the distribution of the target population align with the problem.
 
 I then looked for any statistical relationships, correlations, or other relevant properties of the dataset that could influence bus lateness.
 
@@ -74,11 +74,9 @@ I then looked for any statistical relationships, correlations, or other relevant
 
 - First I needed to choose the proper predictors. I looked for strong correlations between variables to avoid problems with multicollinearity
 
-- Also, variables that changed very little had minimal impact and were therefore not included as predictors
-
 - I then studied correlations between predictors and the target variable (lateness)
 
-- I saw from the correlation matrices that `occupancy_level` and `load_factor` are highly correlated. Furthermore, both are correlated to the target variable `lateness_minutes`. Similar patterns emerged with `capacity`
+- I saw from the correlation matrices that `capacity` and `time` are correlated. Furthermore, both are correlated to the target variable `lateness_minutes`.
 
 A heatmap of correlations using `Seaborn` follows:
 
@@ -115,15 +113,67 @@ The usual diagnostic plots were then created after the fit:
 
 <a id = 'conc'></a>
 
-Both models generated negative $R^2$ scores, indicating these regression models are not be sufficient models in capturing the variation of lateness within these datasets. The linear model illustrates an interesting behaviour of the residuals, where residuals follow a negative linear trend while the Gaussian GLM shows resdiuals tend to cluster. Error metrics are quite high, suggesting the results these models generate are not precise enough to be useful.
+The regression results of the models are included.
 
-## Conclusions and recommendations
+For the **Gaussian GLM with the `auto` link**:
+
+```text
+=== Regression Results ===
+R² (Train): 0.0829
+R² (Test): 0.0542
+RMSE (Train): 5.0642
+RMSE (Test): 5.1763
+
+=== Feature Coefficients ===
+                                    Feature  Coefficient  Abs_Coefficient
+               onehot__route_variant_370-18     2.836216         2.836216
+               onehot__route_variant_418-23     2.738374         2.738374
+              onehot__route_variant_422-103     2.427793         2.427793
+               onehot__route_variant_418-12     2.426269         2.426269
+               onehot__route_variant_t71-68     2.391006         2.391006
+               onehot__route_variant_333-42     2.253914         2.253914
+               onehot__route_variant_526-20     2.230437         2.230437
+               onehot__route_variant_492-35     2.201543         2.201543
+               onehot__route_variant_525-49     2.172072         2.172072
+               onehot__route_variant_353-13     2.091997         2.091997
+               onehot__route_variant_l80-16     2.063689         2.063689
+```
+
+For the vanilla **Linear Regression**:
+
+```text
+=== Regression Results ===
+R² (Train): 0.2287
+R² (Test): 0.0118
+RMSE (Train): 4.6440
+RMSE (Test): 5.2910
+
+=== Feature Coefficients ===
+                                    Feature  Coefficient  Abs_Coefficient
+               onehot__route_variant_207-48    56.508799        56.508799
+                 onehot__route_variant_57-6    48.794709        48.794709
+             onehot__route_variant_620x-206    41.680966        41.680966
+               onehot__route_variant_692w-2    36.972149        36.972149
+              onehot__route_variant_754-206    33.870166        33.870166
+            onehot__route_variant_6042-8109    30.024881        30.024881
+               onehot__route_variant_151-22    29.640277        29.640277
+               onehot__route_variant_391-66    28.280842        28.280842
+               onehot__route_variant_720n-4    27.469305        27.469305
+               onehot__route_variant_722-56    27.160290        27.160290
+               onehot__route_variant_796w-1    26.601148        26.601148
+```
+
+Both models illustrated fairly low $R^2$ scores, with better $R^2$ displayed by the Gaussian GLM, suggesting this model was about to capture $5.4\%$ of total variation in the test set. Moreover, the regression errors are fairly low for both model, suggesting the models performed adequately in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
+
+Addtionally, both models attributed the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.  
+
+## Conclusions
 
 The following conclusions were derived from the lateness regression analysis:
 
 - **Occupancy correlation**: Higher occupancy levels correlate with increased lateness due to longer boarding times. Routes with consistently high occupancy should consider increased frequency or larger vehicles
 
-- **Route-specific patterns**: Certain route (607x) consistently underperform in punctuality. These routes require targeted interventions such as dedicated bus lanes or schedule adjustments
+- **Route-specific patterns**: Certain route consistently underperform in punctuality. These routes require targeted interventions such as dedicated bus lanes or schedule adjustments
 
 - **Day-of-week variations**: Weekend services show different lateness patterns compared to weekdays, suggesting the need for differentiated scheduling approaches
 
@@ -131,6 +181,6 @@ The following conclusions were derived from the lateness regression analysis:
 
   - Use bootstrap or similar data generation methods to acquire synthetic data for the period September-early November where data was not collected
 
-  - Integrate environmental covariates (weather, traffic conditions, etc.) into modelling
+  - Integrate environmental and spatial covariates (weather, traffic conditions, etc.) into modelling
 
   - Focus on reducing dwell times at high-occupancy stops through improved boarding processes
