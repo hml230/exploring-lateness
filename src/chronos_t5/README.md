@@ -88,46 +88,14 @@ processed_path: "/path/to/your/data/"
 
 ## Training with ChronosT5
 
-After running the preprocessing pipeline, use the generated `chronos_train.parquet` file with ChronosT5 training scripts provided on the official repo:
-
-```bash
-python chronos-forecasting/scripts/evaluation/evaluate.py --config chronos_eval_config.yaml
-# Example ChronosT5 training command
-python train_chronos.py \
-    --data-path ./chronos_data.parquet \
-    --model-size tiny \
-    --batch-size 32 \
-    --learning-rate 1e-4
-```
-
-## Data Characteristics
-
-### Time Series Properties
-
-- **Frequency**: 15-minute intervals
-
-- **Domain**: Bus lateness (minutes)
-
-- **Granularity**: Route-suburb combinations
-
-### Expected Output Volume
-
-- Processing 50k raw records typically yields hundreds of time series
-
-- Each time series contains variable length sequences
-
-- Average sequence length depends on data temporal span
-
-## Training and Evaluating
-
-First, clone into the official [chronos-repo](https://github.com/amazon-science/chronos-forecasting). The repo will contain scripts that can be used out of the box for training.
-
-After clonning, execute the training script:
+First, clone into the official [chronos-repo](https://github.com/amazon-science/chronos-forecasting), the repo contains scripts that are necessary for training and evaluating. After running the preprocessing pipeline, use the generated `train_set.parquet` with ChronosT5 training scripts provided on the official repo:
 
 ```bash
 python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
-                                            --model-id amazon/chronos-t5-tiny
+                                            --model-id amazon/chronos-t5-tiny \
+                                            --other-config
 ```
+
 For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
 
 ```python
@@ -149,7 +117,6 @@ elif "path" in backtest_config:
         
         _, test_template = split(gts_dataset, offset=offset)
         test_data = test_template.generate_instances(prediction_length, windows=num_rolls)
-#
 ```
 
 ## References
