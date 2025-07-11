@@ -208,6 +208,8 @@ Some forecasted values for the first 3 series at the $12^{th}$ time step are dis
 
 This aligns with insights from data analysis, which showed latenes generally lie within the 0-5 minutes range.
 
+<a id = 'conc'></a>
+
 ## Conclusions
 
 The following conclusions were derived from the lateness regression analysis:
@@ -225,3 +227,5 @@ The following conclusions were derived from the lateness regression analysis:
   - Integrate environmental and spatial covariates (weather, traffic conditions, etc.) into modelling
 
   - Better definition of problem, taking into account data availability and relevancy
+
+So, if we assume the post-Covid bus usage in 2025 is similar to pre-Covid rates in 2016-2017, commuters will likely see their services being late if they live in urban areas, with predicted average latetime ranging from 3-6 minutes.
