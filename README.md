@@ -77,7 +77,7 @@ Data transformation procedures performed:
 
 Some of the steps for mining the data included: computing average lateness per route and computing both passenger load factors and frequency-based metrics.
 
-Outliers are diverse within the datasets acquired, the values range from $-1400$ minutes to $1500$ minutes. From the problem definition, these values suggest issues related to the shceduling system, or other external factors that are not studied in this project. Hence, I capped these `lateness_minutes` values to $\pm 60$ minutes to ensure the distribution of the target population align with the problem.
+Outliers are diverse, with lateness ranges from $-1400$ minutes to $1500$ minutes. For lateness, these values possibly caused by structural issues rather than randomly occurred. Hence, I capped these `lateness_minutes` values to $\pm 60$ minutes to ensure the distribution of the target population align with the problem.
 
 I then looked for any statistical relationships, correlations, or other relevant properties of the dataset that could influence bus lateness.
 
