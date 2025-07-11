@@ -33,7 +33,7 @@ Data analysis shows bus routes in urban areas are more likely to be late or extr
 
 The chosen regression models while were not adequate in fully capturing the variation of lateness, consistently suggested spatial features, like `route_variant`, provide strong predictive insights into lateness.
 
-ChronosT5-tiny was fine-tuned and predicted lateness was generally around 1-5 minutes. The model's would require extra resources for inference on the full dataset given the context length.
+ChronosT5-tiny was fine-tuned and predicted lateness varies around 1-5 minutes. The model's would require extra resources for inference on the full dataset given the context length.
 
 Additionally, since data was recorded in 3 distinct, discontinuous periods, structuring this problem as a sequential, continuous time series may not have been sufficient for ChronosT5. Also, data was not available to verify the predictions made by ChronosT5.
 
