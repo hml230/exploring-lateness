@@ -8,7 +8,7 @@
 <br>
 
 <p align="center">
-  <a href="#summary"> Executive summary </a> •
+  <a href="#summary"> Summary </a> •
   <a href="#data"> Sourcing data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
@@ -20,13 +20,15 @@
 
 <a id = 'summary'></a>
 
-## Executive Summary
+## Summary
 
 From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
 
 ChronosT5 was fine-tuned as forecasted lateness to be around 0-5 minutes. The model's would require extra resources to derive inferences on the full dataset.
 
 Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5. The performed procedures might not have been adequate.
+
+Visualisations can be found in the  `images/` directory, and relevant notebooks are included under `src/`.
 
 <a id = 'data'></a>
 
@@ -63,6 +65,12 @@ Data transformation procedures performed:
 - Creating time-based features such as hour of day, day of week, and peak/off-peak indicators
 
 - Create stratified samples of sizes 10K to 100K of the full dataset, since there are >20M trips made in total
+
+Aggregating data into 15-minute bins, there seems to be a spike in lateness earlier in drivers' shift and a gradual decrease as the day is ending. From this, I inferred customers usage/occupancy of buses may be a strong predictor of lateness.
+
+<p align="center">
+   <img src="images/lateness_trend.png" alt="Lateness Trend" width="400">
+<p/>
 
 <a id = 'mine'></a>
 
