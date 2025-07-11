@@ -1,6 +1,13 @@
 # Bus Lateness Prediction Analysis
 
-![Image title](https://img.shields.io/badge/python-3.10.0-orange.svg) ![Image title](https://img.shields.io/badge/PySpark-3.4.0-orange.svg) ![Image title](https://img.shields.io/badge/sklearn-1.7.0-yellow.svg) ![Image title](https://img.shields.io/badge/pandas-2.3.0-yellow.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/python-3.10+-orange.svg)
+![PyTorch](https://img.shields.io/badge/pytorch-2.7.1+-red.svg)
+![Jupyter](https://img.shields.io/badge/jupyter-1.1.1+-blue.svg)
+![NumPy](https://img.shields.io/badge/numpy-2.2.6+-lightgrey.svg)
+![Pandas](https://img.shields.io/badge/pandas-2.3.1+-yellow.svg)
+![PySpark](https://img.shields.io/badge/pyspark-3.4.0-orange.svg)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.7.0+-brightgreen.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-red.svg)](https://opensource.org/licenses/MIT)
 <br>
 <p align="center">
   <img src="images/bus.jpg" alt="Title Image">
@@ -12,8 +19,8 @@
   <a href="#data"> Sourcing data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
-  <a href="#models"> Modelling </a> •
-  <a href="#plots"> Plotting results </a> •
+  <a href="#models"> Models </a> •
+  <a href="#plots"> Visualisation </a> •
   <a href="#fine_tune"> Fine Tunning </a> •
   <a href="#conc"> Conclusions</a>
 </p>
@@ -24,7 +31,7 @@
 
 From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
 
-ChronosT5 was fine-tuned as forecasted lateness to be around 0-5 minutes. The model's would require extra resources to derive inferences on the full dataset.
+ChronosT5-tiny was fine-tuned and predicted lateness was generally around 0-5 minutes. The model's would require extra resources for inference on the full dataset.
 
 Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5. The performed procedures might not have been adequate.
 
@@ -78,7 +85,7 @@ Aggregating data into 15-minute bins, there seems to be a spike in lateness earl
 
 Some of the steps for mining the data included: computing average lateness per route and computing both passenger load factors and frequency-based metrics.
 
-Outliers are diverse within the datasets acquired, the values range from $-1400$ minutes to $1500$ minutes. From the problem definition, these values suggest issues related to the shceduling system, or other external factors that are not studied in this project. Hence, I capped these `lateness_minutes` values to $\pm 60$ minutes to ensure the distribution of the target population align with the problem.
+Outliers are diverse, with lateness ranges from $-1400$ minutes to $1500$ minutes. For lateness, these values possibly caused by structural issues rather than randomly occurred. Therefore, I capped these `lateness_minutes` values to $\pm 60$ minutes to ensure the distribution of the target population align with the problem.
 
 I then looked for any statistical relationships, correlations, or other relevant properties of the dataset that could influence bus lateness.
 
@@ -88,7 +95,7 @@ I then looked for any statistical relationships, correlations, or other relevant
 
 - I then studied correlations between predictors and the target variable (lateness)
 
-- I saw from the correlation matrices that `capacity` and `time` are correlated. Furthermore, both are correlated to the target variable `lateness_minutes`.
+- Most variables have weak correlation with the target `lateness_minutes`
 
 A heatmap of correlations using `Seaborn` follows:
 
@@ -102,7 +109,7 @@ A heatmap of correlations using `Seaborn` follows:
 
 Using `scikit-learn`, I instantiate a `LinearRegression` model and a `TweedieRegressor` with `power=0` and evaluated their fit.
 
-The models were 3-folds cross validated using `GridSearchCV`, and the best models with their coefficients were obtained via:
+The models were 5-folds cross validated using `GridSearchCV`, and the best models with their coefficients were obtained via:
 
 ```python
 best_linear_model = linear_grid_search.best_estimator_
@@ -123,14 +130,6 @@ The usual diagnostic plots were then created after the fit:
    <img src="images/lr_results.png" alt="Diagnostics Plots of Linear Model"  width="500">
 <p/>
 
-ChronosT5's predictions are plotted below:
-
-<p align="center">
-   <img src="src/chronos_t5/results/chronos_output.png" alt="ChronosT5-Tiny predictions"  width="500">
-<p/>
-
-<a id = 'conc'></a>
-
 The regression results of the models are included.
 
 For the **Gaussian GLM with the `auto` link**:
@@ -149,12 +148,6 @@ RMSE (Test): 5.1763
               onehot__route_variant_422-103     2.427793         2.427793
                onehot__route_variant_418-12     2.426269         2.426269
                onehot__route_variant_t71-68     2.391006         2.391006
-               onehot__route_variant_333-42     2.253914         2.253914
-               onehot__route_variant_526-20     2.230437         2.230437
-               onehot__route_variant_492-35     2.201543         2.201543
-               onehot__route_variant_525-49     2.172072         2.172072
-               onehot__route_variant_353-13     2.091997         2.091997
-               onehot__route_variant_l80-16     2.063689         2.063689
 ```
 
 For the vanilla **Linear Regression**:
@@ -173,17 +166,11 @@ RMSE (Test): 5.2910
              onehot__route_variant_620x-206    41.680966        41.680966
                onehot__route_variant_692w-2    36.972149        36.972149
               onehot__route_variant_754-206    33.870166        33.870166
-            onehot__route_variant_6042-8109    30.024881        30.024881
-               onehot__route_variant_151-22    29.640277        29.640277
-               onehot__route_variant_391-66    28.280842        28.280842
-               onehot__route_variant_720n-4    27.469305        27.469305
-               onehot__route_variant_722-56    27.160290        27.160290
-               onehot__route_variant_796w-1    26.601148        26.601148
 ```
 
-Both models illustrated fairly low $R^2$ scores, with better $R^2$ displayed by the Gaussian GLM, suggesting this model was about to capture $5.4\%$ of total variation in the test set. Moreover, the regression errors are fairly low for both model, suggesting the models performed adequately in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
+Both models had fairly low $R^2$ scores, with better $R^2$ given to the Gaussian GLM, meaning $5.4\%$ of total variation was captured in the test set. Regression errors are fairly low for both model, so both adequately performed in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
 
-Addtionally, both models attributed the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.  
+Also, both models attributed variants of the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.
 
 <a id = 'fine_tune'></a>
 
@@ -207,12 +194,14 @@ The performance of zero-shot and in-domain inferences is displayed below:
 | :---------------- | :------: | ----: |----: |
 | bus_lateness_dataset | ./finetuned_chronos/run-0/checkpoint-final | 2.7867063388247733 | 0.17843434113949755 |
 
+Fine-tune reduced the mean absolute error and improved the prediction's accuracy. However, without access to actual data, it's difficult to verify the precision of these values.
+
 ### Forecasted lateness
 
 Some forecasted values for the first 3 series at the $12^{th}$ time step are displayed:
 
 | item_id | q10 | q50 | q90 |
-| :---------------- | :------: | ----: |----: |----: |
+| :---------------- | ----: |----: |----: |
 | 1-2_austinmer | 3.9960 | 3.9999 | 4.0482 |
 | 1-5_corrimal | 1.9817633628845215 | 1.9817633628845215 | 2.005544662475586 |
 | 11-5_wollongong | $\approx$ 0 | $\approx$ 0 | 0.0402 |
@@ -235,4 +224,4 @@ The following conclusions were derived from the lateness regression analysis:
 
   - Integrate environmental and spatial covariates (weather, traffic conditions, etc.) into modelling
 
-  - Focus on reducing dwell times at high-occupancy stops through improved boarding processes
+  - Better definition of problem, taking into account data availability and relevancy

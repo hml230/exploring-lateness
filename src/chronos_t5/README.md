@@ -4,7 +4,7 @@ This directory contains a preprocessing pipeline for fine-tuning ChronosT5 on bu
 
 ## Overview
 
-ChronosT5-tiny is a time series forecasting model that can be fine-tuned on domain-specific data. This directory preprocesses bus schedule and lateness data into the format required for ChronosT5 training.
+ChronosT5-tiny is an open-source time series forecasting model that can be fine-tuned on domain-specific data. This directory preprocesses bus schedule and lateness data into the format required for ChronosT5 training.
 
 ## Dataset Format
 
@@ -75,7 +75,10 @@ python chronos_preprocessing.py
 Create `training_config.yaml` and `test_config.yaml` files in your root directory for paths to datasets and model parameters:
 
 ```yaml
-processed_path: "/path/to/your/data/"
+- name: bus_lateness_dataset
+  path: ./chronos_test.parquet
+  frequency: "15min"
+  prediction_length: 12
 ```
 
 ### Minimum Data Requirements
@@ -88,55 +91,36 @@ processed_path: "/path/to/your/data/"
 
 ## Training with ChronosT5
 
-After running the preprocessing pipeline, use the generated `chronos_train.parquet` file with ChronosT5 training scripts provided on the official repo:
+First, clone into the official [chronos-repo](https://github.com/amazon-science/chronos-forecasting), the repo contains scripts that are necessary for training and evaluating. After running the preprocessing pipeline, use the generated `train_set.parquet` with ChronosT5 training scripts provided on the official repo:
 
 ```bash
-python chronos-forecasting/scripts/evaluation/evaluate.py --config chronos_eval_config.yaml
-# Example ChronosT5 training command
-python train_chronos.py \
-    --data-path ./chronos_data.parquet \
-    --model-size tiny \
-    --batch-size 32 \
-    --learning-rate 1e-4
+python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
+                                            --model-id amazon/chronos-t5-tiny \
+                                            --other-config
 ```
 
-## Data Characteristics
+For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
 
-### Time Series Properties
+```python
+elif "path" in backtest_config:
+        df = pd.read_parquet(backtest_config["path"])
+        frequency = backtest_config["frequency"]
+        
+        gts_dataset = []
+        for item_id in df['item_id'].unique():
+            series_data = df[df['item_id'] == item_id]
+            gts_dataset.append({
+                "start": pd.Period(series_data['start'].iloc[0], freq=frequency),
+                "target": series_data['target'].iloc[0]
+            })
 
-- **Frequency**: 15-minute intervals
-
-- **Domain**: Bus lateness (minutes)
-
-- **Granularity**: Route-suburb combinations
-
-### Expected Output Volume
-
-- Processing 50k raw records typically yields hundreds of time series
-
-- Each time series contains variable length sequences
-
-- Average sequence length depends on data temporal span
-
-## Troubleshooting
-
-### Common Issues
-
-#### "Created 0 time series"
-
-- Check if minimum data threshold is too high
-
-- Verify timestamp parsing is working correctly
-
-- Ensure data contains sufficient non-null values
-
-#### Memory Issues
-
-- Increase Spark memory allocation
-
-- Process data in smaller chunks
-
-- Consider using Spark's built-in partitioning
+        # Set default
+        offset = backtest_config.get("offset", -prediction_length)
+        num_rolls = backtest_config.get("num_rolls", 1)
+        
+        _, test_template = split(gts_dataset, offset=offset)
+        test_data = test_template.generate_instances(prediction_length, windows=num_rolls)
+```
 
 ## References
 
