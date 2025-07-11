@@ -16,7 +16,7 @@ with open(CONFIG_PATH, encoding="utf-8") as f:
     config = yaml.safe_load(f)
 
 # Load global variables
-D_PATH = config["processed_path"] + "sample_50k.csv"
+D_PATH = config["processed_path"] + "sample_50k.csv" # Your data file
 COLS = ["route_variant", "suburb", "timetable_time",
         "lateness_minutes", "standing_capacity", "seated_capacity"]
 
