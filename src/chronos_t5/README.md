@@ -75,7 +75,10 @@ python chronos_preprocessing.py
 Create `training_config.yaml` and `test_config.yaml` files in your root directory for paths to datasets and model parameters:
 
 ```yaml
-processed_path: "/path/to/your/data/"
+- name: bus_lateness_dataset
+  path: ./chronos_test.parquet
+  frequency: "15min"
+  prediction_length: 12
 ```
 
 ### Minimum Data Requirements
