@@ -4,7 +4,7 @@ This directory contains a preprocessing pipeline for fine-tuning ChronosT5 on bu
 
 ## Overview
 
-ChronosT5-tiny is a time series forecasting model that can be fine-tuned on domain-specific data. This directory preprocesses bus schedule and lateness data into the format required for ChronosT5 training.
+ChronosT5-tiny is an open-source time series forecasting model that can be fine-tuned on domain-specific data. This directory preprocesses bus schedule and lateness data into the format required for ChronosT5 training.
 
 ## Dataset Format
 
