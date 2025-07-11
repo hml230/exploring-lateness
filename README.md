@@ -196,7 +196,7 @@ The performance of zero-shot and in-domain inferences is displayed below:
 Some forecasted values for the first 3 series at the $12^{th}$ time step are displayed:
 
 | item_id | q10 | q50 | q90 |
-| :---------------- | :------: | ----: |----: |----: |
+| :---------------- | ----: |----: |----: |
 | 1-2_austinmer | 3.9960 | 3.9999 | 4.0482 |
 | 1-5_corrimal | 1.9817633628845215 | 1.9817633628845215 | 2.005544662475586 |
 | 11-5_wollongong | $\approx$ 0 | $\approx$ 0 | 0.0402 |
