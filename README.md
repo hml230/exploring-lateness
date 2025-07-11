@@ -12,8 +12,8 @@
   <a href="#data"> Sourcing data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
-  <a href="#models"> Modelling </a> •
-  <a href="#plots"> Plotting results </a> •
+  <a href="#models"> Models </a> •
+  <a href="#plots"> Visualisation </a> •
   <a href="#fine_tune"> Fine Tunning </a> •
   <a href="#conc"> Conclusions</a>
 </p>
