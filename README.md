@@ -176,7 +176,7 @@ Also, both models attributed variants of the `route_variant` feature to be a fea
 
 ## Fine Tuning
 
-A ChronosT5-tiny was fine-tuned to better study the patterns in lateness. Preprocessing module used is included under the chronos_t5/parquet_preprocessing.py, additional notes are included in the README under chronos_t5.
+A ChronosT5-tiny was fine-tuned to better study the patterns in lateness. Preprocessing module used is included under the [`src` directory](./src/chronos_t5/parquet_preprocessing.py), additional notes are included in the README.
 
 The performance of zero-shot and in-domain inferences is displayed below:
 
