@@ -29,13 +29,13 @@
 
 ## Summary
 
-From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
+From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latwness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in fully capturing the variation of lateness, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
 
-ChronosT5-tiny was fine-tuned and predicted lateness was generally around 0-5 minutes. The model's would require extra resources for inference on the full dataset.
+ChronosT5-tiny was fine-tuned and predicted lateness was generally around 1-5 minutes. The model's would require extra resources for inference on the full dataset given the context length.
 
-Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5. The performed procedures might not have been adequate.
+Additionally, since data was recorded in 3 distinct, discontinuous periods, structuring this problem as a sequential, continuous time series may not have been sufficient for ChronosT5. Also, data was not available to verify the predictions made by ChronosT5.
 
-Visualisations can be found in the  `images/` directory, and relevant notebooks are included under `src/`.
+Visualisations can be found in the  `images/` directory, and relevant notebooks and scripts are included under `src/`.
 
 <a id = 'data'></a>
 
