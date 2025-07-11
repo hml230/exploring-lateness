@@ -20,7 +20,7 @@
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Models </a> •
-  <a href="#plots"> Visualisation </a> •
+  <a href="#plots"> Results </a> •
   <a href="#fine_tune"> Fine Tunning </a> •
   <a href="#conc"> Conclusions</a>
 </p>
