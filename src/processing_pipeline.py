@@ -9,19 +9,16 @@ import yaml
 warnings.filterwarnings('ignore')
 
 
-# Initialise Spark
 spark = SparkSession.builder.config("spark.driver.memory", "8g") \ 
     .config("spark.executor.memory", "4g") \
     .config("spark.memory.fraction", "0.8") \
     .config("spark.memory.storageFraction", "0.3").appName("Bus Performance Analysis").getOrCreate()
 
 
-# Load configuration
 with open("config.yaml", encoding="utf-8") as f:
     config = yaml.safe_load(f)
 
 
-# Dataset paths
 datasets = [
     ("2016_Occupancy_8-August-to-14-August.csv", "august"),
     ("2016_Occupancy_21-November-to-27-November.csv", "november"),
@@ -59,34 +56,29 @@ schema_def = StructType([
 ])
 
 
-# Define processing functions
 def process_single_dataset(file_name, dataset_label):
     """Process a single dataset with all cleaning and feature engineering steps"""    
-    # Load data
+
     df = spark.read.format("csv") \
         .option("header", "true") \
         .option("dateFormat", "dd/MMM/yy") \
         .schema(schema_def) \
         .load(config["raw_data_path"] + file_name)
-         
-    # Lowercase column names
+
     for c in df.columns:
         df = df.withColumnRenamed(c, c.lower())
     
-    # Drop unnecessary columns
+
     df = df.drop("trip_point", "opal_record_status", "timetable_hour_band",
                 "latitude", "longitude",  "trip_code",
                 "timetable_hour_band", "time_period", "transit_stop_description",
                 "bus_doors", "vehicletrip")
-    # Filter out non null actual_time records
     df = df.filter(df.actual_time.isNotNull())
-    
-    # Format string columns
+
     string_cols = [col_name for col_name, dtype in df.dtypes if dtype == 'string']
     for col_name in string_cols:
         df = df.withColumn(col_name, F.lower(F.trim(F.col(col_name))))
     
-    # Convert time columns to timestamps
     df = df.withColumn(
         "actual_time",
         F.to_timestamp(
@@ -102,7 +94,7 @@ def process_single_dataset(file_name, dataset_label):
             "yyyy-MM-dd HH:mm"
         )
     )
-    
+
     # Create lateness variable
     df = df.withColumn(
         "lateness_minutes",
@@ -128,17 +120,14 @@ def process_single_dataset(file_name, dataset_label):
          .when(F.col("lateness_minutes") > 30, "30+ min Late") 
          .otherwise("Unknown")
     )
-    
-    # === TEMPORAL FEATURE ENGINEERING ===
-    
+
+
     # Extract day of week (0 = Monday, 6 = Sunday)
     df = df.withColumn("day_of_week", F.dayofweek(F.col("calendar_date")) - 1)
     
-    # Extract hour and minute from timetable_time
     df = df.withColumn("timetable_hr", F.hour(F.col("timetable_time")))
     df = df.withColumn("timetable_min", F.minute(F.col("timetable_time")))
     
-    # Create weekend indicator
     df = df.withColumn("is_weekend", F.when(F.col("day_of_week").isin([5, 6]), 1).otherwise(0))
     
     # Encode cyclical features for hour (24-hour cycle)
@@ -158,8 +147,9 @@ def process_single_dataset(file_name, dataset_label):
                        F.sin(2 * F.lit(3.14159) * F.col("day_of_week") / 7))
     df = df.withColumn("day_of_week_cos", 
                        F.cos(2 * F.lit(3.14159) * F.col("day_of_week") / 7))
-    
-    # Add dataset label
+
+
+    # Add label
     df = df.withColumn("dataset", F.lit(dataset_label))
     
     return df
@@ -188,7 +178,6 @@ def create_combined_dataset():
 def prepare_ml_features(df):
     """Prepare features specifically for ML models"""
     
-    # Select relevant columns for ML
     ml_features = [
         "calendar_date", "timetable_time", "route", "route_variant", "direction",
         "transit_stop", "transit_stop_sequence", "suburb", "depot", "bus_configuration",
@@ -200,12 +189,11 @@ def prepare_ml_features(df):
     return df.select(*ml_features)
 
 
-# Stratify ampling using sampling fraction
 def export_stratified_samples(df, sample_sizes=[10000, 50000, 100000]):
     """Export stratified samples for training"""
     
     for size in sample_sizes:
-        # Calculate fraction needed for each lateness bucket
+        # Calculate fraction needed for each bucket
         bucket_counts = df.groupBy("lateness_bucket").count().collect()
         total_count = df.count()
         
@@ -232,21 +220,16 @@ def export_stratified_samples(df, sample_sizes=[10000, 50000, 100000]):
 def main():
     """Main processing pipeline"""
     
-    # Process and combine all datasets
     combined_df = create_combined_dataset()
     
-    # Prepare ML features
     ml_ready_df = prepare_ml_features(combined_df)
     
-    # Export full processed dataset
     full_output_path = f"{config['processed_path']}combined_processed_data.csv"
     ml_ready_df.repartition(2).write.options(header=True).csv(full_output_path, mode="overwrite")
     print(f"Exported full processed dataset to {full_output_path}")
     
-    # Export stratified samples for sklearn
     export_stratified_samples(ml_ready_df)
     
-    # Show summary statistics
     print("\n=== DATASET SUMMARY ===")
     print(f"Total records: {ml_ready_df.count():,}")
     print("\nLateness distribution:")
