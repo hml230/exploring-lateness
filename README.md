@@ -191,6 +191,8 @@ The performance of zero-shot and in-domain inferences is displayed below:
 | :---------------- | :------: | ----: |----: |
 | bus_lateness_dataset | ./finetuned_chronos/run-0/checkpoint-final | 2.7867063388247733 | 0.17843434113949755 |
 
+Fine-tune reduced the mean absolute error and improved the prediction's accuracy. However, without access to actual data, it's difficult to verify the precision of these values.
+
 ### Forecasted lateness
 
 Some forecasted values for the first 3 series at the $12^{th}$ time step are displayed:
