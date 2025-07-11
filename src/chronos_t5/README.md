@@ -128,7 +128,7 @@ After clonning, execute the training script:
 python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
                                             --model-id amazon/chronos-t5-tiny
 ```
-For evaluation, I added some code to the `load_and_split_dataset()` function since my data was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
+For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
 
 ```python
 elif "path" in backtest_config:
