@@ -118,25 +118,39 @@ python train_chronos.py \
 
 - Average sequence length depends on data temporal span
 
-## Troubleshooting
+## Training and Evaluating
 
-### Common Issues
+First, clone into the official [chronos-repo](https://github.com/amazon-science/chronos-forecasting). The repo will contain scripts that can be used out of the box for training.
 
-#### "Created 0 time series"
+After clonning, execute the training script:
 
-- Check if minimum data threshold is too high
+```bash
+python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
+                                            --model-id amazon/chronos-t5-tiny
+```
+For evaluation, I added some code to the `load_and_split_dataset()` function since my data was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
 
-- Verify timestamp parsing is working correctly
+```python
+elif "path" in backtest_config:
+        df = pd.read_parquet(backtest_config["path"])
+        frequency = backtest_config["frequency"]
+        
+        gts_dataset = []
+        for item_id in df['item_id'].unique():
+            series_data = df[df['item_id'] == item_id]
+            gts_dataset.append({
+                "start": pd.Period(series_data['start'].iloc[0], freq=frequency),
+                "target": series_data['target'].iloc[0]
+            })
 
-- Ensure data contains sufficient non-null values
-
-#### Memory Issues
-
-- Increase Spark memory allocation
-
-- Process data in smaller chunks
-
-- Consider using Spark's built-in partitioning
+        # Set default
+        offset = backtest_config.get("offset", -prediction_length)
+        num_rolls = backtest_config.get("num_rolls", 1)
+        
+        _, test_template = split(gts_dataset, offset=offset)
+        test_data = test_template.generate_instances(prediction_length, windows=num_rolls)
+#
+```
 
 ## References
 
