@@ -37,7 +37,7 @@ ChronosT5-tiny was fine-tuned and predicted lateness varies around 1-5 minutes. 
 
 Additionally, since data was recorded in 3 distinct, discontinuous periods, structuring this problem as a sequential, continuous time series may not have been sufficient for ChronosT5. Also, data was not available to verify the predictions made by ChronosT5.
 
-Visualisations can be found in the  `images/` directory, and relevant notebooks and scripts are included under `src/`.
+Visualisations can be found in the  `images/` directory, and relevant notebooks and scripts are found under `src/`.
 
 <a id = 'data'></a>
 
