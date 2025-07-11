@@ -99,7 +99,7 @@ python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
                                             --other-config
 ```
 
-For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the evaluate.py script can be used directly. 
+For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the `evaluate.py` script can be used directly. 
 
 ```python
 elif "path" in backtest_config:
@@ -120,6 +120,14 @@ elif "path" in backtest_config:
         
         _, test_template = split(gts_dataset, offset=offset)
         test_data = test_template.generate_instances(prediction_length, windows=num_rolls)
+```
+
+Then the evaluation script can be called with local paths in config:
+
+```bash
+python chronos-forecasting/scripts/evaluation.py  path/to/test_config.yaml \
+                                                  path/to/results_dir/metrics.csv \
+                                                  --other-config
 ```
 
 ## References
