@@ -14,6 +14,7 @@
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Modelling </a> •
   <a href="#plots"> Plotting results </a> •
+  <a href="#fine_tune"> Fine Tunning </a> •
   <a href="#conc"> Conclusions</a>
 </p>
 
@@ -21,11 +22,11 @@
 
 ## Executive Summary
 
-From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness. 
+From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in capturing the variation of lateness fully, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
 
-ChronosT5 was fine-tuned as forecasted lateness to be around 0.1-0.9 minute. The model's performance deteriorate for datasets with >100k observations, potentially due to model size, which limits the ability to extrapolate on the full dataset.  
+ChronosT5 was fine-tuned as forecasted lateness to be around 0-5 minutes. The model's would require extra resources to derive inferences on the full dataset.
 
-Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5.
+Additionally, since data was recorded in 3 distinct, non-sequential periods, structuring this problem as a sequential, continuous time series may not be sufficient for ChronosT5. The performed procedures might not have been adequate.
 
 <a id = 'data'></a>
 
@@ -175,6 +176,40 @@ RMSE (Test): 5.2910
 Both models illustrated fairly low $R^2$ scores, with better $R^2$ displayed by the Gaussian GLM, suggesting this model was about to capture $5.4\%$ of total variation in the test set. Moreover, the regression errors are fairly low for both model, suggesting the models performed adequately in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
 
 Addtionally, both models attributed the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.  
+
+<a id = 'fine_tune'></a>
+
+## Fine Tuning
+
+A ChronosT5-tiny was fine-tuned to better study the patterns in lateness. Preprocessing module used is included under the chronos_t5/parquet_preprocessing.py, additional notes are included in the README under chronos_t5.
+
+The performance of zero-shot and in-domain inferences is displayed below:
+
+### Zero-shot inference
+
+| dataset              | model | MASE | WQL |
+| :---------------- | :------: | ----: |----: |
+| bus_lateness_dataset | amazon/chronos-t5-tiny | 3.2575229047563976 | 0.1947324275149751 |
+
+---
+
+### In-domain inference
+
+| dataset              | model | MASE | WQL |
+| :---------------- | :------: | ----: |----: |
+| bus_lateness_dataset | ./finetuned_chronos/run-0/checkpoint-final | 2.7867063388247733 | 0.17843434113949755 |
+
+### Forecasted lateness
+
+Some forecasted values for the first 3 series at the $12^{th}$ time step are displayed:
+
+| item_id | q10 | q50 | q90 |
+| :---------------- | :------: | ----: |----: |----: |
+| 1-2_austinmer | 3.9960 | 3.9999 | 4.0482 |
+| 1-5_corrimal | 1.9817633628845215 | 1.9817633628845215 | 2.005544662475586 |
+| 11-5_wollongong | $\approx$ 0 | $\approx$ 0 | 0.0402 |
+
+This aligns with insights from data analysis, which showed latenes generally lie within the 0-5 minutes range.
 
 ## Conclusions
 

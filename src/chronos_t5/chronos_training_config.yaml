@@ -1,0 +1,16 @@
+training_data_paths:
+  - "./chronos_train.parquet"
+probability:
+  - 1
+context_length: 96
+prediction_length: 12
+min_past: 60
+max_steps: 10000
+save_steps: 1000
+log_steps: 100
+per_device_train_batch_size: 32
+learning_rate: 5e-5
+optim: adamw_torch_fused
+model_id: amazon/chronos-t5-tiny
+model_type: seq2seq
+output_dir: ./finetuned_chronos/

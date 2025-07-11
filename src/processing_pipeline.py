@@ -1,15 +1,16 @@
 """This module performs as a data processing pipelien for 3 datasets sourced from OpenDataNSW"""
+import warnings
+
 from pyspark import StorageLevel
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, DateType, StringType, StructField, IntegerType, DoubleType
 import yaml
-import warnings
 warnings.filterwarnings('ignore')
 
 
 # Initialise Spark
-spark = SparkSession.builder.config("spark.driver.memory", "8g") \
+spark = SparkSession.builder.config("spark.driver.memory", "8g") \ 
     .config("spark.executor.memory", "4g") \
     .config("spark.memory.fraction", "0.8") \
     .config("spark.memory.storageFraction", "0.3").appName("Bus Performance Analysis").getOrCreate()

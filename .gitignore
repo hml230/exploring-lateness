@@ -6,15 +6,20 @@ __pycache__/
 *.pyo
 *$py.class
 
+# --- Cloned Repo ---
+chronos-forecasting/
+
 # --- Jupyter ---
 .ipynb_checkpoints
 *.nbconvert.ipynb
 notes.ipynb
 
-# IPython
+# --- IPython ---
 profile_default/
 ipython_config.py
 
+# --- Model artifacts ---
+finetuned_chronos/
 
 # --- Data files ---
 raw_data/
@@ -23,6 +28,7 @@ outputs/
 *.csv
 *.crc
 *.json
+*.parquet
 
 # --- Environment files ---
 .env
