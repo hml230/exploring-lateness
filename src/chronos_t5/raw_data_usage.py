@@ -1,4 +1,4 @@
-"""Zero-shot ChronosT5-tiny inference on lateness data"""
+"""Zero-shot inference on unprocessed .csv data, use only for prototyping"""
 from pathlib import Path
 
 import yaml
@@ -10,14 +10,12 @@ from sklearn.preprocessing import StandardScaler
 
 CONFIG_PATH = Path.cwd().parent / "config.yaml"
 
-# Load configuration
+
 with open(CONFIG_PATH, encoding="utf-8") as f:
     config = yaml.safe_load(f)
-    
+
+
 D_PATH =  config["processed_path"] + "sample_50k.csv"
-
-
-# Load preprocessed sample data and sort by time
 df = pd.read_csv(D_PATH)
 df = df.sort_values(by="timetable_time")
 
@@ -33,7 +31,7 @@ CONTEXT_SERIES = lateness[-CONTEXT_LEN:]
 CONTEXT_TENSOR = torch.tensor(CONTEXT_SERIES, dtype=torch.float32).unsqueeze(0)
 
 
-# Load pre-trained ChronosT5-tiny
+# Load
 pipeline = BaseChronosPipeline.from_pretrained(
     "amazon/chronos-t5-tiny",
     device_map="cuda",
