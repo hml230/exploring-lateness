@@ -140,12 +140,6 @@ RMSE (Test): 5.1763
               onehot__route_variant_422-103     2.427793         2.427793
                onehot__route_variant_418-12     2.426269         2.426269
                onehot__route_variant_t71-68     2.391006         2.391006
-               onehot__route_variant_333-42     2.253914         2.253914
-               onehot__route_variant_526-20     2.230437         2.230437
-               onehot__route_variant_492-35     2.201543         2.201543
-               onehot__route_variant_525-49     2.172072         2.172072
-               onehot__route_variant_353-13     2.091997         2.091997
-               onehot__route_variant_l80-16     2.063689         2.063689
 ```
 
 For the vanilla **Linear Regression**:
@@ -164,12 +158,6 @@ RMSE (Test): 5.2910
              onehot__route_variant_620x-206    41.680966        41.680966
                onehot__route_variant_692w-2    36.972149        36.972149
               onehot__route_variant_754-206    33.870166        33.870166
-            onehot__route_variant_6042-8109    30.024881        30.024881
-               onehot__route_variant_151-22    29.640277        29.640277
-               onehot__route_variant_391-66    28.280842        28.280842
-               onehot__route_variant_720n-4    27.469305        27.469305
-               onehot__route_variant_722-56    27.160290        27.160290
-               onehot__route_variant_796w-1    26.601148        26.601148
 ```
 
 Both models had fairly low $R^2$ scores, with better $R^2$ given to the Gaussian GLM, meaning $5.4\%$ of total variation was captured in the test set. Regression errors are fairly low for both model, so both adequately performed in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
