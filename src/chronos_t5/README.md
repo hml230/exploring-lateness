@@ -8,7 +8,7 @@ ChronosT5-tiny is an open-source time series forecasting model that can be fine-
 
 ## Dataset Format
 
-The pipeline transforms raw bus data into time series format suitable for ChronosT5:
+The `parquet_processing.py` script transforms raw bus data into time series format suitable for ChronosT5:
 
 ### Input Data Structure
 
@@ -31,7 +31,7 @@ item_id, start, target, freq
 
 2. **Preprocessing**: Cleans data by removing null values and formatting timestamps
 
-3. **Time Series Creation**: Groups data by route-suburb combinations to create individual time series
+3. **Time Series Creation**: Groups data by route variant-suburb combinations to create time series for individual items
 
 4. **Resampling**: Converts unqueal bus schedule observations to 15-minute intervals
 
@@ -81,7 +81,7 @@ Create `training_config.yaml` and `test_config.yaml` files in your root director
   prediction_length: 12
 ```
 
-### Minimum Data Requirements
+### Data Requirements
 
 - Minimum 10 non-null observations per time series
 
@@ -98,6 +98,8 @@ python chronos-forecasting/scripts/train.py --config path/to/train_config.yaml \
                                             --model-id amazon/chronos-t5-tiny \
                                             --other-config
 ```
+
+ChronosT5 was trained on 600+ series processed from the initial dataset, and tested on the remaining 150.
 
 For evaluation, I added some code to the `load_and_split_dataset()` function since my test set was hosted locally. If your dataset is hosted on Hugging Face, the `evaluate.py` script can be used directly. 
 
