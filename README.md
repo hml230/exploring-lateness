@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="#summary"> Summary </a> •
-  <a href="#data"> Sourcing data </a> •
+  <a href="#data"> Sourcing Data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Models </a> •
@@ -39,7 +39,7 @@ Visualisations can be found in the  `images/` directory, and relevant notebooks 
 
 <a id = 'data'></a>
 
-## Sourcing data
+## Sourcing Data
 
 The 2016 Bus Occupancy Dataset, available via OpenData NSW, was used for this project. The dataset includes:
 
