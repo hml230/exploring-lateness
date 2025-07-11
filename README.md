@@ -115,14 +115,6 @@ The usual diagnostic plots were then created after the fit:
    <img src="images/lr_results.png" alt="Diagnostics Plots of Linear Model"  width="500">
 <p/>
 
-ChronosT5's predictions are plotted below:
-
-<p align="center">
-   <img src="src/chronos_t5/results/chronos_output.png" alt="ChronosT5-Tiny predictions"  width="500">
-<p/>
-
-<a id = 'conc'></a>
-
 The regression results of the models are included.
 
 For the **Gaussian GLM with the `auto` link**:
