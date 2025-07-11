@@ -221,4 +221,4 @@ The following conclusions were derived from the lateness regression analysis:
 
   - Integrate environmental and spatial covariates (weather, traffic conditions, etc.) into modelling
 
-  - Focus on reducing dwell times at high-occupancy stops through improved boarding processes
+  - Better definition of problem, taking into account data availability and relevancy
