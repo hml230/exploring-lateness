@@ -87,7 +87,7 @@ I then looked for any statistical relationships, correlations, or other relevant
 
 - I then studied correlations between predictors and the target variable (lateness)
 
-- I saw from the correlation matrices that `capacity` and `time` are correlated. Furthermore, both are correlated to the target variable `lateness_minutes`.
+- Most variables have weak correlation with the target `lateness_minutes`
 
 A heatmap of correlations using `Seaborn` follows:
 
