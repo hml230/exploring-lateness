@@ -29,7 +29,7 @@
 
 ## Summary
 
-From data analysis, bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than buses in other suburbs, and latwness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in fully capturing the variation of lateness, both consistently suggested spatial features, like `route`, provide strong predictive insights into lateness.
+Data analysis shows bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than routes in other suburbs, and lateness often spikes on Wednesdays and Fridays. The chosen regression models while were not adequate in fully capturing the variation of lateness, consistently suggested spatial features, like `route_variant`, provide strong predictive insights into lateness.
 
 ChronosT5-tiny was fine-tuned and predicted lateness was generally around 1-5 minutes. The model's would require extra resources for inference on the full dataset given the context length.
 
