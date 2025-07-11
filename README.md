@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#summary"> Executive summary </a> •
-  <a href="#data"> Sourcing data </a> •
+  <a href="#data"> Sourcing Data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Models </a> •
