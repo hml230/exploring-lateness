@@ -94,7 +94,7 @@ A heatmap of correlations using `Seaborn` follows:
 
 Using `scikit-learn`, I instantiate a `LinearRegression` model and a `TweedieRegressor` with `power=0` and evaluated their fit.
 
-The models were 3-folds cross validated using `GridSearchCV`, and the best models with their coefficients were obtained via:
+The models were 5-folds cross validated using `GridSearchCV`, and the best models with their coefficients were obtained via:
 
 ```python
 best_linear_model = linear_grid_search.best_estimator_
