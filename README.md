@@ -1,6 +1,13 @@
 # Bus Lateness Prediction Analysis
 
-![Image title](https://img.shields.io/badge/python-3.10.0-orange.svg) ![Image title](https://img.shields.io/badge/PySpark-3.4.0-orange.svg) ![Image title](https://img.shields.io/badge/sklearn-1.7.0-yellow.svg) ![Image title](https://img.shields.io/badge/pandas-2.3.0-yellow.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/python-3.10+-orange.svg)
+![PyTorch](https://img.shields.io/badge/pytorch-2.7.1+-red.svg)
+![Jupyter](https://img.shields.io/badge/jupyter-1.1.1+-blue.svg)
+![NumPy](https://img.shields.io/badge/numpy-2.2.6+-lightgrey.svg)
+![Pandas](https://img.shields.io/badge/pandas-2.3.1+-yellow.svg)
+![PySpark](https://img.shields.io/badge/pyspark-3.4.0-orange.svg)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.7.0+-brightgreen.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-red.svg)](https://opensource.org/licenses/MIT)
 <br>
 <p align="center">
   <img src="images/bus.jpg" alt="Title Image">
