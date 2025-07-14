@@ -29,7 +29,7 @@
 
 ## Summary
 
-This investigates lateness patterns in New South Wales (NSW)' 2016 bus network. Using real-world NSW transport data, it analyses over 20 million+ bus trips to identify how time-of-day, route, and service type affect arrival punctuality.
+This investigates lateness patterns in New South Wales (NSW)' 2016 bus network. Using real-world NSW transport data, it analyses over 20 million bus trips to identify how time-of-day, route, service types and route sequence affect arrival punctuality.
 
 Key findings include:
 
