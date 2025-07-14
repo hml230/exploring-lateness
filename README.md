@@ -53,7 +53,7 @@ The 2016 Bus Occupancy Dataset, available via OpenData NSW, was sourced for this
 
 - **Geographic data**: Stop locations, route distances, lattitude and longitude
 
-The scope of this project is limited to investigating/exploring factors that influence public transport's lateness. To predict lateness with high confidence and develop a strong model, results from this project will need to be re-evaluated expand upon.
+The scope of this project is limited to investigating/exploring factors that influence public transport's lateness. To predict lateness with high confidence and develop a strong model, results from this project will need to be re-evaluated expanded upon.
 
 <a id = 'munge_eda'></a>
 
