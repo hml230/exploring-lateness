@@ -57,11 +57,11 @@ The 2016 Bus Occupancy Dataset, available via OpenData NSW, was sourced for this
 
 - **Route information**: Bus route identifiers, stop sequences, and route characteristics
 
-- **Temporal data**: Scheduled departure times, and actual departure times
+- **Temporal data**: Scheduled and actual departure times
 
 - **Operational data**: Bus occupancy levels, vehicle capacity, transit sequence
 
-- **Geographic data**: Stop locations, route distances, lattitude and longitude
+- **Geographic data**: Services' suburb, route distances, lattitude and longitude
 
 <a id = 'munge_eda'></a>
 
