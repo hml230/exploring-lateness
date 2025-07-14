@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="#summary"> Summary </a> •
-  <a href="#data"> Data and Scope </a> •
+  <a href="#data"> Sourcing Data </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Models </a> •
@@ -29,19 +29,29 @@
 
 ## Summary
 
-Data analysis shows bus routes in urban areas are more likely to be late or extremely late (>30 minutes) than routes in other suburbs and lateness often spikes on Wednesdays and Fridays. 
+This investigates lateness patterns in New South Wales (NSW)' 2016 bus network. Using real-world NSW transport data, it analyses over 20 million+ bus trips to identify how time-of-day, route, and service type affect arrival punctuality.
 
-The chosen regression models while were not adequate in fully capturing the variation of lateness, consistently suggested spatial features, like `route_variant`, provide strong predictive insights into lateness.
+Key findings include:
 
-ChronosT5-tiny was fine-tuned and predicted lateness varies between 1-6 minutes for the majority of suburbs. The model's would require extra resources for inference on the full dataset given the context length.
+- Buses are most likely late by **2–6 minutes**, especially on urban routes.
+  
+- **Afternoon peak (3–6 PM)** is associated with more delays, delays decrease later in the day.
+  
+- Variation is higher on certain routes, suggesting targets for schedule adjustment.
+  
+- Urban areas' services are more likely to be late or extremely late (>30 minutes).
 
-Additionally, since data was recorded in 3 distinct, discontinuous periods, structuring this problem as a sequential, continuous time series may not have been sufficient for ChronosT5. Also, data was not available to verify the predictions made by ChronosT5.
+- Services experience seasonal lateness spike on Wednesdays and Fridays.
 
-Visualisations can be found in the  `images/` directory, and relevant notebooks and scripts are found under `src/`.
+The project applies regression modeling with cross-validation and focuses on **explaining lateness** rather than forecasting specific values, although a forecasting model (ChronosT5) was fine-tuned to explore this aspect.
+
+It should also be noted that the data was recorded in 3 discontinuous periods, structuring this problem as a continuous time series may not have been sufficient for the forecasting model. Also, data was not available to verify the predictions made.
+
+Relevant notebooks and scripts are found under `src/`.
 
 <a id = 'data'></a>
 
-## Data and Scope
+## Sourcing Data
 
 The 2016 Bus Occupancy Dataset, available via OpenData NSW, was sourced for this project. The dataset includes:
 
@@ -52,8 +62,6 @@ The 2016 Bus Occupancy Dataset, available via OpenData NSW, was sourced for this
 - **Operational data**: Bus occupancy levels, vehicle capacity, transit sequence
 
 - **Geographic data**: Stop locations, route distances, lattitude and longitude
-
-The scope of this project is limited to investigating/exploring factors that influence public transport's lateness. To predict lateness with high confidence and develop a strong model, results from this project will need to be re-evaluated expanded upon.
 
 <a id = 'munge_eda'></a>
 
@@ -210,7 +218,7 @@ Some forecasted values for the first 3 series at the $12^{th}$ time step are dis
 | 1-5_corrimal | 1.9817633628845215 | 1.9817633628845215 | 2.005544662475586 |
 | 11-5_wollongong | $\approx$ 0 | $\approx$ 0 | 0.0402 |
 
-This aligns with insights from data analysis, which showed latenes generally lie within the 0-5 minutes range.
+This aligns with insights from data analysis, which showed latenes generally lie within the 2-6 minutes range.
 
 <a id = 'conc'></a>
 
