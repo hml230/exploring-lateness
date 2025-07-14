@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="#summary"> Summary </a> •
-  <a href="#data"> Sourcing Data </a> •
+  <a href="#data"> Data and Scope </a> •
   <a href="#munge_eda"> Data Transformation </a> •
   <a href="#mine"> Data Mining and EDA</a> •
   <a href="#models"> Models </a> •
@@ -41,9 +41,9 @@ Visualisations can be found in the  `images/` directory, and relevant notebooks 
 
 <a id = 'data'></a>
 
-## Sourcing Data
+## Data and Scope
 
-The 2016 Bus Occupancy Dataset, available via OpenData NSW, was used for this project. The dataset includes:
+The 2016 Bus Occupancy Dataset, available via OpenData NSW, was sourced for this project. The dataset includes:
 
 - **Route information**: Bus route identifiers, stop sequences, and route characteristics
 
@@ -52,6 +52,8 @@ The 2016 Bus Occupancy Dataset, available via OpenData NSW, was used for this pr
 - **Operational data**: Bus occupancy levels, vehicle capacity, transit sequence
 
 - **Geographic data**: Stop locations, route distances, lattitude and longitude
+
+The scope of this project is limited to investigating/exploring factors that influence public transport's lateness. To predict lateness with high confidence and develop a strong model, results from this project will need to be re-evaluated expand upon.
 
 <a id = 'munge_eda'></a>
 
