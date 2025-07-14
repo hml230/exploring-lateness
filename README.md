@@ -37,8 +37,6 @@ ChronosT5-tiny was fine-tuned and predicted lateness varies between 1-6 minutes 
 
 Additionally, since data was recorded in 3 distinct, discontinuous periods, structuring this problem as a sequential, continuous time series may not have been sufficient for ChronosT5. Also, data was not available to verify the predictions made by ChronosT5.
 
-From results, commuters can expect buses to be late from 3-6 minutes, with more variation in average lateness in urban services/routes.
-
 Visualisations can be found in the  `images/` directory, and relevant notebooks and scripts are found under `src/`.
 
 <a id = 'data'></a>
