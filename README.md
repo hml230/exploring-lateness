@@ -35,7 +35,7 @@ Key findings include:
 
 - Buses are most likely late by **2–6 minutes**, especially on urban routes.
   
-- **Afternoon peak (3–6 PM)** is associated with higher delays, which decreases later in the day.
+- **Afternoon peak (3-6 PM)** is associated with higher delays, which decreases later in the day.
   
 - Variation is higher on certain routes, suggesting targets for schedule adjustment.
   
