@@ -180,9 +180,9 @@ RMSE (Test): 5.2910
               onehot__route_variant_754-206    33.870166        33.870166
 ```
 
-Both models had fairly low $R^2$ scores, with better $R^2$ given to the Gaussian GLM, meaning $5.4\%$ of total variation was captured in the test set. Regression errors are fairly low for both model, so both adequately performed in the test set. The states of the three datasets not being sequential or connected might also have contributed to this low performance.
+Both models had fairly low $R^2$ scores, $5.4\%$ of total variation (potentially in the log scale) was captured in the test set for the GLM. Regression errors are fairly low for both model, so both adequately performed in the test set.
 
-Also, both models attributed variants of the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.
+In addition, both models attributed variants of the `route_variant` feature to be a feature with high predictive power, aligns with the belief that some travelling sequences might be more susceptible to be late than other. For futher investigation, further sequence group and adding an interaction term with `time_of_day`, to study which sequence is late at which time, might uncover more insights.
 
 <a id = 'fine_tune'></a>
 
